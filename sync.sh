@@ -68,23 +68,14 @@ cvsimport() {
 push_to_remote() {
     declare retval=0
 
-    log INFO 'git push --all started...'
-    git --git-dir=$MYDIR/git/.git/ push --all origin >> $LOGPATH_TODAY 2>&1
+    log INFO 'git push --mirror started...'
+    git --git-dir=$MYDIR/git/.git/ push -f --all origin >> $LOGPATH_TODAY 2>&1
     retval=$?    
     if [ $retval -eq 0 ]; then
-        log INFO 'git push --all succeeded'
+        log INFO 'git push --mirror succeeded'
     else
-        log ERROR 'git push --all failed'
+        log ERROR 'git push --mirror failed'
         return $retval
-    fi
-
-    log INFO 'git push --tags started...'
-    git --git-dir=$MYDIR/git/.git/ push --tags origin >> $LOGPATH_TODAY 2>&1
-    retval=$?    
-    if [ $retval -eq 0 ]; then
-        log INFO 'git push --tags succeeded'
-    else
-        log ERROR 'git push --tags failed'
     fi
 
     return $retval
